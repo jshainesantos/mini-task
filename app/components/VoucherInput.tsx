@@ -17,9 +17,9 @@ const VoucherInput = () => {
   };
 
   return (
-    <View className="px-4">
+    <View className="p-5 bg-white rounded-xl shadow-sm">
       <TextInput
-        className="border border-mid-gray p-2 rounded"
+        className="border border-gray-300 p-3 rounded-lg mb-3"
         placeholder="Enter voucher code"
         value={code}
         onChangeText={(text) => {
@@ -27,9 +27,14 @@ const VoucherInput = () => {
           if (error) setError("");
         }}
       />
-      {error ? <Text className="text-red-500 mt-4">{error}</Text> : null}
-      <Pressable className="bg-brand p-2 mt-5 rounded" onPress={handleApply}>
-        <Text className="text-white text-center py-1">Apply Voucher</Text>
+      {error ? <Text className="text-red-500 mb-3">{error}</Text> : null}
+      <Pressable
+        className="bg-brand p-4 rounded-xl shadow-sm active:opacity-80 flex-row justify-center items-center"
+        onPress={handleApply}
+      >
+        <Text className="text-white text-center font-semibold text-base">
+          Apply Voucher
+        </Text>
       </Pressable>
     </View>
   );
