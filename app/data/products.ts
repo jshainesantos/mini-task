@@ -1,8 +1,28 @@
-export type Product = {
-  id: string;
-  productName: string;
-  description: string;
-  price: number;
-};
+import { Product } from "../types/Product";
 
-export const PRODUCTS: Product[] = [];
+export const products: Product[] = [
+  {
+    id: 1,
+    productName: "Wireless Headphones",
+    description: "Noise-cancelling over-ear headphones",
+    price: 199,
+  },
+  {
+    id: 2,
+    productName: "Smartwatch",
+    description: "Fitness tracking with heart rate monitor",
+    price: 149,
+  },
+  {
+    id: 3,
+    productName: "Bluetooth Speaker",
+    description: "Portable speaker with deep bass",
+    price: 89,
+  },
+  {
+    id: 4,
+    productName: "Gaming Mouse",
+    description: "High precision with RGB lighting",
+    price: 59,
+  },
+];
