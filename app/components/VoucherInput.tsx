@@ -1,5 +1,38 @@
-import React from "react";
+import React, { useState } from "react";
+import { View, TextInput, Pressable, Text } from "react-native";
+import { useCart } from "../hooks/useCart";
 
-export default function VoucherInput() {
-  return null;
-}
+const VoucherInput = () => {
+  const [code, setCode] = useState("");
+  const [error, setError] = useState("");
+  const { applyVoucher } = useCart();
+
+  const handleApply = () => {
+    if (!code.trim()) {
+      setError("Please enter a voucher code.");
+      return;
+    }
+    setError("");
+    applyVoucher(code);
+  };
+
+  return (
+    <View className="px-4">
+      <TextInput
+        className="border border-mid-gray p-2 rounded"
+        placeholder="Enter voucher code"
+        value={code}
+        onChangeText={(text) => {
+          setCode(text);
+          if (error) setError("");
+        }}
+      />
+      {error ? <Text className="text-red-500 mt-4">{error}</Text> : null}
+      <Pressable className="bg-brand p-2 mt-5 rounded" onPress={handleApply}>
+        <Text className="text-white text-center py-1">Apply Voucher</Text>
+      </Pressable>
+    </View>
+  );
+};
+
+export default VoucherInput;
