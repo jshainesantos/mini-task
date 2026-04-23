@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, FlatList, Pressable } from "react-native";
+import { FlatList, Pressable, Text, View } from "react-native";
 import { useCart } from "../hooks/useCart";
 
 const Cart = () => {
@@ -20,7 +20,7 @@ const Cart = () => {
             </Text>
             <View className="flex-row items-center">
               <Text className="text-magenta mr-4">
-                ${item.price * item.quantity}
+                ₱{item.price * item.quantity}
               </Text>
               <Pressable onPress={() => removeFromCart(item.id)}>
                 <Text className="text-danger">Remove</Text>
@@ -29,12 +29,10 @@ const Cart = () => {
           </View>
         )}
       />
-      <Text className="text-mid-gray mt-4">
-        Total: ${total.toFixed(2)}
-      </Text>
+      <Text className="text-mid-gray mt-4">Total: ₱{total.toFixed(2)}</Text>
       {discountedTotal !== total && (
         <Text className="text-brand-dark font-bold">
-          Discounted Total: ${discountedTotal.toFixed(2)}
+          Discounted Total: ₱{discountedTotal.toFixed(2)}
         </Text>
       )}
     </View>
