@@ -9,6 +9,7 @@ const ProductList = () => {
       data={products}
       keyExtractor={(item) => item.id.toString()}
       renderItem={({ item }) => <ProductCard product={item} />}
+      contentContainerStyle={{ padding: 10 }}
     />
   );
 };
