@@ -1,5 +1,16 @@
 import React from "react";
+import { FlatList } from "react-native";
+import { products } from "../data/products";
+import ProductCard from "./ProductCard";
 
-export default function ProductList() {
-  return null;
-}
+const ProductList = () => {
+  return (
+    <FlatList
+      data={products}
+      keyExtractor={(item) => item.id.toString()}
+      renderItem={({ item }) => <ProductCard product={item} />}
+    />
+  );
+};
+
+export default ProductList;
