@@ -10,7 +10,7 @@ const ProductCard: React.FC<Props> = ({ product }) => {
 
   const handleAdd = () => {
     addToCart(product);
-    Alert.alert("Added to Cart", `₱{product.productName} has been added.`);
+    Alert.alert("Added to Cart", `${product.productName} has been added.`);
   };
 
   return (
