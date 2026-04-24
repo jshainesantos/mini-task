@@ -3,13 +3,14 @@ import { FlatList, Pressable, Text, View } from "react-native";
 import { useCart } from "../hooks/useCart";
 
 const Cart = () => {
-  const { cart, removeFromCart, total, discountedTotal } = useCart();
+  const { cart, removeFromCart, updateQuantity, total, discountedTotal } =
+    useCart();
   const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
 
   return (
     <View className="p-5 bg-white rounded-xl shadow-sm flex-1">
       <Text className="text-brand font-bold text-lg mb-4">
-        Cart ({totalItems} items)
+        🛒 Cart ({totalItems} items)
       </Text>
 
       {totalItems === 0 ? (
@@ -27,19 +28,54 @@ const Cart = () => {
             data={cart}
             keyExtractor={(item) => item.id.toString()}
             renderItem={({ item }) => (
-              <View className="flex-row justify-between items-center py-3 border-b border-gray-200">
-                <Text className="text-deep-black font-medium">
-                  {item.productName} ×{item.quantity}
-                </Text>
-                <View className="flex-row items-center">
-                  <Text className="text-magenta font-semibold mr-4">
-                    ₱{item.price * item.quantity}
+              <View className="flex-row items-center py-3 border-b border-gray-100">
+                <View className="flex-1 pr-3">
+                  <View>
+                    <Text className="text-deep-black font-semibold text-base">
+                      {item.productName}
+                    </Text>
+                    <Text className="text-gray-400 text-xs">
+                      ₱{item.price.toFixed(2)} each
+                    </Text>
+                  </View>
+
+                  <View className="mt-1">
+                    <View className="flex-row items-center bg-gray-50 rounded-md overflow-hidden border border-gray-200 w-32 justify-between">
+                      <Pressable
+                        className="px-3 py-1"
+                        onPress={() =>
+                          updateQuantity(item.id, item.quantity - 1)
+                        }
+                      >
+                        <Text className="text-base">−</Text>
+                      </Pressable>
+                      <View className="px-4 py-1">
+                        <Text className="text-sm font-medium">
+                          {item.quantity}
+                        </Text>
+                      </View>
+                      <Pressable
+                        className="px-3 py-1"
+                        onPress={() =>
+                          updateQuantity(item.id, item.quantity + 1)
+                        }
+                      >
+                        <Text className="text-base">+</Text>
+                      </Pressable>
+                    </View>
+                  </View>
+                </View>
+
+                <View className="items-end justify-center">
+                  <Text className="text-deep-black font-semibold text-sm">
+                    ₱{(item.price * item.quantity).toFixed(2)}
                   </Text>
+
                   <Pressable
-                    className="px-3 py-1 bg-red-100 rounded-lg"
+                    className="mt-1"
                     onPress={() => removeFromCart(item.id)}
                   >
-                    <Text className="text-danger font-medium">Remove</Text>
+                    <Text className="text-red-500 text-sm">Remove</Text>
                   </Pressable>
                 </View>
               </View>
