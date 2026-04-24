@@ -1,12 +1,13 @@
-import React from "react";
-import { SafeAreaView, View, Pressable, Text } from "react-native";
 import { useRouter } from "expo-router";
+import React from "react";
+import { Pressable, SafeAreaView, Text, View } from "react-native";
 import ProductList from "./components/ProductList";
 import { useCart } from "./hooks/useCart";
 
 export default function Index() {
   const router = useRouter();
   const { cart } = useCart();
+  const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
 
   return (
     <SafeAreaView className="flex-1 bg-gray-50">
@@ -20,11 +21,9 @@ export default function Index() {
           <Text className="text-white text-center font-semibold text-base mr-2">
             Go to Cart
           </Text>
-          {cart.length > 0 && (
+          {totalItems > 0 && (
             <View className="bg-white px-2 min-w-[26px] rounded-full items-center justify-center">
-              <Text className="text-brand font-bold text-sm">
-                {cart.length}
-              </Text>
+              <Text className="text-brand font-bold text-sm">{totalItems}</Text>
             </View>
           )}
         </Pressable>
