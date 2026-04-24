@@ -31,21 +31,23 @@ const ProductCard: React.FC<Props> = ({ product }) => {
       </Text>
 
       <View className="flex-row items-center justify-between mt-2">
-        <View className="flex-row items-center bg-gray-100 rounded-full px-6 py-1 justify-between w-28">
+        <View className="flex-row items-center bg-gray-50 rounded-md overflow-hidden border border-gray-200 w-32 justify-between">
           <Pressable
             onPress={() => setQuantity((q) => Math.max(1, q - 1))}
-            className="active:opacity-70"
+            className="px-3 py-1 active:opacity-70"
           >
-            <Text className="text-base font-bold">-</Text>
+            <Text className="text-base">−</Text>
           </Pressable>
 
-          <Text className="text-base font-medium">{quantity}</Text>
+          <View className="px-4 py-1">
+            <Text className="text-sm font-medium">{quantity}</Text>
+          </View>
 
           <Pressable
             onPress={() => setQuantity((q) => q + 1)}
-            className="active:opacity-70"
+            className="px-3 py-1 active:opacity-70"
           >
-            <Text className="text-base font-bold">+</Text>
+            <Text className="text-base">+</Text>
           </Pressable>
         </View>
 
