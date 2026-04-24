@@ -1,4 +1,4 @@
-import React, { createContext, useState } from "react";
+import React, { createContext, useState, useMemo, useCallback } from "react";
 import { CartItem } from "../types/CartItem";
 import { Product } from "../types/Product";
 
@@ -8,7 +8,7 @@ type CartContextType = {
   removeFromCart: (id: number) => void;
   total: number;
   discountedTotal: number;
-  applyVoucher: (code: string) => void;
+  applyVoucher: (code: string) => boolean;
 };
 
 export const CartContext = createContext<CartContextType | undefined>(
@@ -21,10 +21,11 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({
   const [cart, setCart] = useState<CartItem[]>([]);
   const [discount, setDiscount] = useState<number>(0);
 
-  const addToCart = (product: Product) => {
+  const addToCart = useCallback((product: Product) => {
     setCart((prev) => {
       const qtyToAdd = product.quantity ?? 1;
       const existing = prev.find((item) => item.id === product.id);
+
       if (existing) {
         return prev.map((item) =>
           item.id === product.id
@@ -34,22 +35,38 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({
       }
       return [...prev, { ...product, quantity: qtyToAdd }];
     });
-  };
+  }, []);
 
-  const removeFromCart = (id: number) => {
+  const removeFromCart = useCallback((id: number) => {
     setCart((prev) => prev.filter((item) => item.id !== id));
-  };
+  }, []);
 
-  const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
-  const discountedTotal = total - total * discount;
+  const total = useMemo(
+    () => cart.reduce((sum, item) => sum + item.price * item.quantity, 0),
+    [cart],
+  );
 
-  const applyVoucher = (code: string) => {
-    if (code === "discount10") {
-      setDiscount(0.1);
-    } else {
-      setDiscount(0);
+  const discountedTotal = useMemo(
+    () => total * (1 - discount),
+    [total, discount],
+  );
+
+  const applyVoucher = useCallback((code: string): boolean => {
+    const voucherKey = code.trim().toLowerCase();
+
+    const vouchers: Record<string, number> = {
+      discount10: 0.1,
+      discount20: 0.2,
+    };
+
+    if (voucherKey in vouchers) {
+      setDiscount(vouchers[voucherKey]);
+      return true;
     }
-  };
+
+    setDiscount(0);
+    return false;
+  }, []);
 
   return (
     <CartContext.Provider
