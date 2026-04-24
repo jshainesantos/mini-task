@@ -1,5 +1,5 @@
-import "../global.css";
 import { Stack } from "expo-router";
+import "../global.css";
 import { CartProvider } from "./context/CartContext";
 
 export default function Layout() {
