@@ -1,4 +1,4 @@
-import React, { createContext, useState, useMemo, useCallback } from "react";
+import React, { createContext, useCallback, useMemo, useState } from "react";
 import { CartItem } from "../types/CartItem";
 import { Product } from "../types/Product";
 
@@ -6,6 +6,7 @@ type CartContextType = {
   cart: CartItem[];
   addToCart: (product: Product) => void;
   removeFromCart: (id: number) => void;
+  updateQuantity: (id: number, quantity: number) => void;
   total: number;
   discountedTotal: number;
   applyVoucher: (code: string) => boolean;
@@ -41,6 +42,15 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({
     setCart((prev) => prev.filter((item) => item.id !== id));
   }, []);
 
+  const updateQuantity = useCallback((id: number, quantity: number) => {
+    setCart((prev) => {
+      if (quantity <= 0) return prev.filter((item) => item.id !== id);
+      return prev.map((item) =>
+        item.id === id ? { ...item, quantity } : item,
+      );
+    });
+  }, []);
+
   const total = useMemo(
     () => cart.reduce((sum, item) => sum + item.price * item.quantity, 0),
     [cart],
@@ -74,6 +84,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({
         cart,
         addToCart,
         removeFromCart,
+        updateQuantity,
         total,
         discountedTotal,
         applyVoucher,
