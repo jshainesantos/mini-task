@@ -4,14 +4,15 @@ import { useCart } from "../hooks/useCart";
 
 const Cart = () => {
   const { cart, removeFromCart, total, discountedTotal } = useCart();
+  const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
 
   return (
     <View className="p-5 bg-white rounded-xl shadow-sm flex-1">
       <Text className="text-brand font-bold text-lg mb-4">
-        Cart ({cart.length} items)
+        Cart ({totalItems} items)
       </Text>
 
-      {cart.length === 0 ? (
+      {totalItems === 0 ? (
         <View className="flex-1 items-center justify-center py-10">
           <Text className="text-gray-500 text-base font-medium">
             Your cart is empty

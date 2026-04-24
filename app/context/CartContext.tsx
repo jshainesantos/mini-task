@@ -23,15 +23,16 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({
 
   const addToCart = (product: Product) => {
     setCart((prev) => {
+      const qtyToAdd = product.quantity ?? 1;
       const existing = prev.find((item) => item.id === product.id);
       if (existing) {
         return prev.map((item) =>
           item.id === product.id
-            ? { ...item, quantity: item.quantity + 1 }
+            ? { ...item, quantity: item.quantity + qtyToAdd }
             : item,
         );
       }
-      return [...prev, { ...product, quantity: 1 }];
+      return [...prev, { ...product, quantity: qtyToAdd }];
     });
   };
 
