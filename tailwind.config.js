@@ -9,12 +9,9 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        brand: "#ed5145",
-        "deep-black": "#1f1f1f",
-        "mid-gray": "#353535",
-        magenta: "#b92d71",
-        danger: "#fa1b1b",
-        "brand-dark": "#B92D61",
+        brand: "#DE3163",
+        "deep-black": "#1A1A1A",
+        danger: "#E60026",
       },
     },
   },
