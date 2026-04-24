@@ -50,7 +50,7 @@ const VoucherInput: React.FC = () => {
   return (
     <View className="px-5 pb-5 bg-white rounded-xl shadow-sm">
       <TextInput
-        className="border border-gray-300 p-3 rounded-lg mb-5"
+        className="border border-gray-300 px-3 rounded-lg mb-5"
         placeholder="Enter voucher code"
         value={code}
         onChangeText={handleChange}
