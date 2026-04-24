@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, TextInput, Pressable, Text } from "react-native";
+import { Pressable, Text, TextInput, View } from "react-native";
 import { useCart } from "../hooks/useCart";
 
 const VoucherInput = () => {
@@ -17,9 +17,9 @@ const VoucherInput = () => {
   };
 
   return (
-    <View className="p-5 bg-white rounded-xl shadow-sm">
+    <View className="px-5 pb-5 bg-white rounded-xl shadow-sm">
       <TextInput
-        className="border border-gray-300 p-3 rounded-lg mb-3"
+        className="border border-gray-300 p-3 rounded-lg mb-5"
         placeholder="Enter voucher code"
         value={code}
         onChangeText={(text) => {
